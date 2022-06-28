@@ -35,48 +35,77 @@ const Visualizer = () => {
     const resetArray = () => {
         
         const list = []
-        let listSize = 0
+        let listSize = 5
 
-        if (screen.xs) {
-            listSize = randomIntFromInterval(5, 50)
-        } else if (screen.sm) {
-            listSize = randomIntFromInterval(5, 100)
-        } else if (screen.md) {
-            listSize = randomIntFromInterval(5, 150)
+        if (screen.xxl) {
+            listSize = randomIntFromInterval(5, 300)
+        } else if (screen.xl) {
+            listSize = randomIntFromInterval(5, 250)
         } else if (screen.lg) {
             listSize = randomIntFromInterval(5, 200)
-        } else {
-            listSize = randomIntFromInterval(5, 500)
-        }
+        } else if (screen.md) {
+            listSize = randomIntFromInterval(5, 150)
+        } else if (screen.sm) {
+            listSize = randomIntFromInterval(5, 100)
+        } else if (screen.xs) {
+            listSize = randomIntFromInterval(5, 50)
+        } 
 
         for (let i = 0; i < listSize; i++) {
             list.push(randomIntFromInterval(5, 1000))
         }
         setArray(list)
+
+        let bar = undefined
+        for (let i = 0; i < listSize; i++) {
+            bar = document.getElementById(i)
+            if (bar !== undefined) {
+                color(i, "#9a0307", 0)
+            }
+        }
     }
 
     // eslint-disable-next-line
     useEffect(() => resetArray(), [])
 
-    const calculateHeight = (value) => { return 0.9 * ((value / Math.max(...array)) * (windowSize.innerHeight))}
+    const calculateHeight = (value) => {
+        return 0.9 * ((value / Math.max(...array)) * (windowSize.innerHeight))
+    }
+
+    const color = (index, color, counter) => {
+        if (index < array.length)
+        setTimeout(() => {
+            const bar1 = document.getElementById(index)
+            bar1.style.backgroundColor = color
+        }, counter)
+    }
+
+    const swap = (index1, index2, counter) => {
+        setTimeout(() => {
+            const bar1 = document.getElementById(index1)
+            const bar2 = document.getElementById(index2)
+            const tempHeight = bar1.style.height
+            bar1.style.height = bar2.style.height
+            bar2.style.height = tempHeight
+        }, counter)
+    }
 
     return (
         <>
-            <NavBar resetArray={resetArray}></NavBar>
+            <NavBar resetArray={resetArray} array={array.slice()} swap={swap} color={color}></NavBar>
             <Row justify='center' align='bottom'>
-                <Col span={24} align='center'>
+                <Col  align='center'>
                     {array.map((value, index) => (            
-                        <div key={index} style={
-                                { 
-                                height: calculateHeight(value),
-                                backgroundColor: "#9a0307", 
-                                display: "inline-block", 
-                                width: "4px",
-                                bottom: 0,
-                                margin: "1px"
-                                }
-                            }>
-                            <></>
+                        <div key={index} id={index} style={
+                            { 
+                            height: calculateHeight(value),
+                            backgroundColor: "#9a0307", 
+                            display: "inline-block", 
+                            width: "4px",
+                            bottom: 0,
+                            margin: "1px"
+                            }
+                        }>
                         </div>
                     ))}
                 </Col>

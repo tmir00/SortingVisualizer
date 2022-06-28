@@ -8,6 +8,8 @@ import {
     ContainerOutlined,
     MailOutlined
   } from '@ant-design/icons';
+import { bblSort } from '../Algorithms/bubbleSort';
+import { quickSortStart } from '../Algorithms/quickSort';
 
 const { Title } = Typography
 
@@ -22,23 +24,28 @@ function getItem(label, key, icon, children, type) {
   }
 
   const items = [
-    getItem('Insertion Sort', '1', <PieChartOutlined />),
-    getItem('Heap Sort', '2', <DesktopOutlined />),
-    getItem('Merge Sort', '3', <ContainerOutlined />),
-    getItem('Bubble Sort', '4', <MailOutlined />,
-    ),
+    getItem('Bubble Sort', 'Bubble Sort', <MailOutlined />),
+    getItem('Quick Sort', 'Quick Sort', <PieChartOutlined />),
+    getItem('Heap Sort', 'Heap Sort', <DesktopOutlined />),
+    getItem('Merge Sort', 'Merge Sort', <ContainerOutlined />),
   ];
 
 const NavBar = (props) => {
-    const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(false)
+    const [algorithm, setAlgorithm] = useState('Bubble Sort')
 
     const showDrawer = () => {
-        setVisible(true);
-    };
+        setVisible(true)
+    }
 
     const onClose = () => {
-        setVisible(false);
-    };
+        setVisible(false)
+    }
+
+    const onClick = (e) => {
+        setAlgorithm(e.key)
+        onClose()
+    }
 
     return (
         <Row align='middle' style={
@@ -65,9 +72,17 @@ const NavBar = (props) => {
                         mode="inline"
                         theme="dark"
                         items={items}
+                        onClick={onClick}
                     />
                 </Drawer>
                 <Button type='ghost' style={{marginLeft: "5px", color: "#E2E2E2"}} onClick={ () => props.resetArray()}>Create New Array</Button>
+                <Button type='ghost' style={{marginLeft: "5px", color: "#E2E2E2"}} onClick={ () => {
+                    if (algorithm === 'Bubble Sort') {
+                        bblSort(props.array, props.swap, props.color)
+                    } else if (algorithm === 'Quick Sort') {
+                        quickSortStart(props.array, props.swap, props.color, 0, props.array.length - 1)
+                    }
+                    }}>Run {algorithm}</Button>
             </Col>
             <Col span={12} align="right">
                 <Title level={2} style={{color: "#E2E2E2", margin: "5px"}}>SORTING VISUALIZER</Title>
