@@ -1,4 +1,4 @@
-let counter = 0
+import { appendCounter, counter } from "../NavBar/NavBar";
 
 export function bblSort(array, swap, color) {
     let arr = array.slice()
@@ -15,11 +15,10 @@ export function bblSort(array, swap, color) {
           if(arr[j] > arr[j + 1]){
             color(j, "yellow", counter)
             color(j + 1, "yellow", counter)
-            counter = counter + 25
+            appendCounter()
             var temp = arr[j]
             arr[j] = arr[j+1];
             arr[j+1] = temp;
-            console.log(arr === array)
             isSwapped = true;
             swap(j, j + 1, counter)
             color(j, "#9a0307", counter)
@@ -36,5 +35,5 @@ export function bblSort(array, swap, color) {
         break;
       }
     }
-    counter = 0
+    return arr
 }

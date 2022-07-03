@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Row, Col, Button, Typography, Drawer, Menu} from 'antd'
+import {Row, Col, Button, Typography, Drawer, Menu, Slider} from 'antd'
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
@@ -9,9 +9,16 @@ import {
     MailOutlined
   } from '@ant-design/icons';
 import { bblSort } from '../Algorithms/bubbleSort';
-import { quickSortStart } from '../Algorithms/quickSort';
+import { quicksort } from '../Algorithms/quickSort';
+import { heapsort } from '../Algorithms/heapSort';
+
+export let counter = 0
+
+let addCounter = 25
 
 const { Title } = Typography
+
+export function appendCounter() {counter += addCounter}
 
 function getItem(label, key, icon, children, type) {
     return {
@@ -33,6 +40,7 @@ function getItem(label, key, icon, children, type) {
 const NavBar = (props) => {
     const [visible, setVisible] = useState(false)
     const [algorithm, setAlgorithm] = useState('Bubble Sort')
+    const [disableButtons, setDisabled] = useState(false)
 
     const showDrawer = () => {
         setVisible(true)
@@ -55,8 +63,8 @@ const NavBar = (props) => {
                 marginTop: 0,
                 boxShadow: "0px 15px 10px -15px #111",
             }}>
-            <Col span={12}>
-                <Button type='ghost' style={{marginLeft: "5px", color: "#E2E2E2"}} onClick={() => showDrawer()}>
+            <Col span={8}>
+                <Button type='ghost' style={{marginLeft: "5px", color: "#E2E2E2"}} disabled={disableButtons} onClick={() => showDrawer()}>
                     {visible ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
                 </Button>
                 <Drawer
@@ -75,16 +83,38 @@ const NavBar = (props) => {
                         onClick={onClick}
                     />
                 </Drawer>
-                <Button type='ghost' style={{marginLeft: "5px", color: "#E2E2E2"}} onClick={ () => props.resetArray()}>Create New Array</Button>
-                <Button type='ghost' style={{marginLeft: "5px", color: "#E2E2E2"}} onClick={ () => {
+                <Button type='ghost' style={{marginLeft: "5px", color: "#E2E2E2"}} disabled={disableButtons} onClick={ () => props.resetArray()}>Create New Array</Button>
+                <Button type='ghost' style={{marginLeft: "5px", color: "#E2E2E2"}} disabled={disableButtons} onClick={ () => {
+                    setDisabled(true)
                     if (algorithm === 'Bubble Sort') {
-                        bblSort(props.array, props.swap, props.color)
+                        const result = bblSort(props.array, props.swap, props.color)
+                        setTimeout(() => {
+                            props.setArray(result)
+                            setDisabled(false)
+                        }, counter)
+                        counter = 0
                     } else if (algorithm === 'Quick Sort') {
-                        quickSortStart(props.array, props.swap, props.color, 0, props.array.length - 1)
+                        const result = quicksort(props.array, 0, props.array.length - 1, props.swap, props.color)
+                        setTimeout(() => {
+                            props.setArray(result)
+                            setDisabled(false)
+                        }, counter)
+                        counter = 0
+                    } else if (algorithm === 'Heap Sort') {
+                        const result = heapsort(props.array, props.swap, props.color)
+                        setTimeout(() => {
+                            props.setArray(result)
+                            setDisabled(false)
+                        }, counter)
+                        counter = 0
                     }
                     }}>Run {algorithm}</Button>
+                    
             </Col>
-            <Col span={12} align="right">
+            <Col span={8}>
+                <Slider defaultValue={25} min={10} max={200} disabled={disableButtons} onChange={(e) => addCounter = e}/>
+            </Col>
+            <Col span={8} align="right">
                 <Title level={2} style={{color: "#E2E2E2", margin: "5px"}}>SORTING VISUALIZER</Title>
             </Col>
         </Row>

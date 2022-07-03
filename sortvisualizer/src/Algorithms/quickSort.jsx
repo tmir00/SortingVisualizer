@@ -1,59 +1,58 @@
-let counter = 0
+import { appendCounter, counter } from "../NavBar/NavBar";
 
-function swapItems(items, leftIndex, rightIndex){
-    var temp = items[leftIndex];
-    items[leftIndex] = items[rightIndex];
-    items[rightIndex] = temp;
+
+export function swap(lst, index1, index2) {
+    const temp = lst[index1]
+    lst[index1] = lst[index2]
+    lst[index2] = temp
+    return lst
 }
 
-function partition(items, left, right, swap, color) {
-    
-    var pivot   = items[Math.floor((right + left) / 2)], //middle element
-        i       = left, //left pointer
-        j       = right; //right pointer
-        
-    while (i <= j) {
-        while (items[i] < pivot) {
-            i++;
-        }
-        while (items[j] > pivot) {
-            j--;
-        }
-        if (i <= j) {
+
+function partition(lst, left, right, swapBars, color) {
+    let i = left - 1
+    let j = left
+    const pivot = lst[right]
+    color(right, "purple", counter)
+
+    while (j < right) {
+        if (lst[j] < pivot){
+            i += 1
             color(i, "yellow", counter)
             color(j, "yellow", counter)
-            swapItems(items, i, j); //sawpping two elements
-            counter += 2500
-            swap(i, j, counter)
-            
+            appendCounter()
+            lst = swap(lst, i, j)
+            swapBars(i, j, counter)
             color(i, "#9a0307", counter)
             color(j, "#9a0307", counter)
-            i++;
-            j--;
         }
+        j += 1
     }
-    // color(i, "green", counter)
-    // color(j, "green", counter)
-    color(Math.floor((right + left) / 2), "green", counter)
-    return i;
+    for (let k = i + 1; k < right + 1; k++) {
+        color(k, "yellow", counter)
+        color(right, "yellow", counter)
+        appendCounter()
+        swap(lst, k, right)
+        swapBars(k, right, counter)
+        color(k, "#9a0307", counter)
+        color(right, "#9a0307", counter)
+    }
+
+    color(i + 1, "green", counter)
+    return i + 1
 }
 
-function quickSort(items, swap, color, left, right) {
-    var index;
-    if (items.length > 1) {
-        index = partition(items, left, right, swap, color); //index returned from partition
-        if (left < index - 1) { //more elements on the left side of the pivot
-            quickSort(items, swap, color, left, index - 1);
+
+export function quicksort(lst, left, right, swap, color) {
+    if (lst.length > 1) {
+        let pivotIndex = partition(lst, left, right, swap, color)
+
+        if (pivotIndex < right) {
+            quicksort(lst, pivotIndex + 1, right, swap, color)
         }
-        if (index < right) { //more elements on the right side of the pivot
-            quickSort(items, swap, color, index, right);
+        if (pivotIndex > left) {
+            quicksort(lst, left, pivotIndex - 1, swap, color)
         }
     }
-    return items;
-}
-
-export function quickSortStart(items, swap, color, left, right) {
-    
-    quickSort(items, swap, color, left, right)
-    counter = 0
+    return lst
 }

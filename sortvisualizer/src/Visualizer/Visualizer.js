@@ -38,17 +38,17 @@ const Visualizer = () => {
         let listSize = 5
 
         if (screen.xxl) {
-            listSize = randomIntFromInterval(5, 300)
-        } else if (screen.xl) {
             listSize = randomIntFromInterval(5, 250)
-        } else if (screen.lg) {
+        } else if (screen.xl) {
             listSize = randomIntFromInterval(5, 200)
-        } else if (screen.md) {
+        } else if (screen.lg) {
             listSize = randomIntFromInterval(5, 150)
-        } else if (screen.sm) {
+        } else if (screen.md) {
             listSize = randomIntFromInterval(5, 100)
-        } else if (screen.xs) {
+        } else if (screen.sm) {
             listSize = randomIntFromInterval(5, 50)
+        } else if (screen.xs) {
+            listSize = randomIntFromInterval(5, 25)
         } 
 
         for (let i = 0; i < listSize; i++) {
@@ -92,7 +92,7 @@ const Visualizer = () => {
 
     return (
         <>
-            <NavBar resetArray={resetArray} array={array.slice()} swap={swap} color={color}></NavBar>
+            <NavBar resetArray={resetArray} array={array.slice()} swap={swap} color={color} setArray={setArray}></NavBar>
             <Row justify='center' align='bottom'>
                 <Col  align='center'>
                     {array.map((value, index) => (            
