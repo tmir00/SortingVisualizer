@@ -15,6 +15,7 @@ export function heapsort(lst, swapBars, color) {
         n -= 1
         heapify(lst, 0, n, swapBars, color)
     }
+    color(0, "green", counter)
     return lst
 }
 

@@ -31,7 +31,6 @@ function partition(lst, left, right, swapBars, color) {
     for (let k = i + 1; k < right + 1; k++) {
         color(k, "yellow", counter)
         color(right, "yellow", counter)
-        appendCounter()
         swap(lst, k, right)
         swapBars(k, right, counter)
         color(k, "#9a0307", counter)

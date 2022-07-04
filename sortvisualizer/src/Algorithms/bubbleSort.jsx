@@ -1,7 +1,7 @@
 import { appendCounter, counter } from "../NavBar/NavBar";
 
 export function bblSort(array, swap, color) {
-    let arr = array.slice()
+    let arr = array
     var i, j;
     var len = arr.length;
      

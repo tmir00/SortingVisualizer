@@ -73,7 +73,7 @@ const Visualizer = () => {
     }
 
     const color = (index, color, counter) => {
-        if (index < array.length)
+        if (index < array.length && index >= 0)
         setTimeout(() => {
             const bar1 = document.getElementById(index)
             bar1.style.backgroundColor = color
@@ -81,13 +81,15 @@ const Visualizer = () => {
     }
 
     const swap = (index1, index2, counter) => {
-        setTimeout(() => {
-            const bar1 = document.getElementById(index1)
-            const bar2 = document.getElementById(index2)
-            const tempHeight = bar1.style.height
-            bar1.style.height = bar2.style.height
-            bar2.style.height = tempHeight
-        }, counter)
+        if (index1 >= 0 && index1 < array.length && index2 >= 0 && index2 < array.length) {
+            setTimeout(() => {
+                const bar1 = document.getElementById(index1)
+                const bar2 = document.getElementById(index2)
+                const tempHeight = bar1.style.height
+                bar1.style.height = bar2.style.height
+                bar2.style.height = tempHeight
+            }, counter)
+        }
     }
 
     return (

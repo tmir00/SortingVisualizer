@@ -3,8 +3,8 @@ import Visualizer from './Visualizer/Visualizer';
 
 function App() {
   return (
-    <div className="App">
-      <Visualizer></Visualizer>
+    <div style={{backgroundColor: "#D5D5D5"}} className="App">
+        <Visualizer></Visualizer>
     </div>
   );
 }
