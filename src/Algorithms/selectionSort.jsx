@@ -11,7 +11,7 @@ export function selectionSort(lst, swapBars, color) {
             }
         }
 
-        if (minIndex != i) {
+        if (minIndex !== i) {
             color(i, "yellow", counter)
             color(minIndex, "yellow", counter)
             appendCounter()
