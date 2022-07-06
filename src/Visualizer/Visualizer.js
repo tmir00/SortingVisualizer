@@ -37,17 +37,17 @@ const Visualizer = () => {
         let listSize = 10
 
         if (screen.xxl) {
-            listSize = randomIntFromInterval(10, 250)
+            listSize = randomIntFromInterval(20, 250)
         } else if (screen.xl) {
-            listSize = randomIntFromInterval(10, 200)
+            listSize = randomIntFromInterval(20, 200)
         } else if (screen.lg) {
-            listSize = randomIntFromInterval(10, 150)
+            listSize = randomIntFromInterval(20, 150)
         } else if (screen.md) {
-            listSize = randomIntFromInterval(10, 100)
+            listSize = randomIntFromInterval(20, 100)
         } else if (screen.sm) {
-            listSize = randomIntFromInterval(10, 50)
+            listSize = randomIntFromInterval(20, 50)
         } else if (screen.xs) {
-            listSize = randomIntFromInterval(10, 25)
+            listSize = randomIntFromInterval(20, 40)
         } 
 
         for (let i = 0; i < listSize; i++) {
