@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Row, Col, Grid } from 'antd'
-import NavBar, { appendCounter } from '../NavBar/NavBar'
+import NavBar from '../NavBar/NavBar'
 
 const { useBreakpoint } = Grid;
 
@@ -77,25 +77,6 @@ const Visualizer = () => {
             const bar1 = document.getElementById(index)
             bar1.style.backgroundColor = color
         }, counter)
-    }
-
-    const comparison = (index1, index2, comparisonColor, counter) => {
-        setTimeout(() => {
-            let beforeColor1 = "#9a0307"
-            let beforeColor2 = "#9a0307"
-            if (index1 < array.length) {
-                beforeColor1 = document.getElementById(index1).style.backgroundColor
-                color(index1, comparisonColor, counter)
-                appendCounter()
-                color(index1, beforeColor1, counter)
-            }
-            if (index2 < array.length) {
-                beforeColor2 = document.getElementById(index2).style.backgroundColor
-                color(index2, comparisonColor, counter)
-                appendCounter()
-                color(index2, beforeColor2, counter)
-            }
-        })
     }
 
     const swap = (index1, index2, counter) => {
