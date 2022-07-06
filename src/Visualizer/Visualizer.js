@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Row, Col, Grid } from 'antd'
-import NavBar from '../NavBar/NavBar';
+import NavBar, { appendCounter } from '../NavBar/NavBar'
 
 const { useBreakpoint } = Grid;
 
@@ -33,22 +33,21 @@ const Visualizer = () => {
     }, []);
 
     const resetArray = () => {
-        
         const list = []
-        let listSize = 5
+        let listSize = 10
 
         if (screen.xxl) {
-            listSize = randomIntFromInterval(5, 250)
+            listSize = randomIntFromInterval(10, 250)
         } else if (screen.xl) {
-            listSize = randomIntFromInterval(5, 200)
+            listSize = randomIntFromInterval(10, 200)
         } else if (screen.lg) {
-            listSize = randomIntFromInterval(5, 150)
+            listSize = randomIntFromInterval(10, 150)
         } else if (screen.md) {
-            listSize = randomIntFromInterval(5, 100)
+            listSize = randomIntFromInterval(10, 100)
         } else if (screen.sm) {
-            listSize = randomIntFromInterval(5, 50)
+            listSize = randomIntFromInterval(10, 50)
         } else if (screen.xs) {
-            listSize = randomIntFromInterval(5, 25)
+            listSize = randomIntFromInterval(10, 25)
         } 
 
         for (let i = 0; i < listSize; i++) {
@@ -80,6 +79,25 @@ const Visualizer = () => {
         }, counter)
     }
 
+    const comparison = (index1, index2, comparisonColor, counter) => {
+        setTimeout(() => {
+            let beforeColor1 = "#9a0307"
+            let beforeColor2 = "#9a0307"
+            if (index1 < array.length) {
+                beforeColor1 = document.getElementById(index1).style.backgroundColor
+                color(index1, comparisonColor, counter)
+                appendCounter()
+                color(index1, beforeColor1, counter)
+            }
+            if (index2 < array.length) {
+                beforeColor2 = document.getElementById(index2).style.backgroundColor
+                color(index2, comparisonColor, counter)
+                appendCounter()
+                color(index2, beforeColor2, counter)
+            }
+        })
+    }
+
     const swap = (index1, index2, counter) => {
         if (index1 >= 0 && index1 < array.length && index2 >= 0 && index2 < array.length) {
             setTimeout(() => {
@@ -88,15 +106,20 @@ const Visualizer = () => {
                 const tempHeight = bar1.style.height
                 bar1.style.height = bar2.style.height
                 bar2.style.height = tempHeight
+                
+                let temp = array[index1]
+                array[index1] = array[index2]
+                array[index2] = temp
+                
             }, counter)
         }
     }
 
     return (
         <>
-            <NavBar resetArray={resetArray} array={array.slice()} swap={swap} color={color} setArray={setArray}></NavBar>
+            <NavBar resetArray={resetArray} array={array.slice()} swap={swap} color={color}></NavBar>
             <Row justify='center' align='bottom'>
-                <Col  align='center'>
+                <Col align='center'>
                     {array.map((value, index) => (            
                         <div key={index} id={index} style={
                             { 

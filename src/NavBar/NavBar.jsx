@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Row, Col, Button, Typography, Drawer, Menu, Slider, Divider, Grid} from 'antd'
 import {
     MenuUnfoldOutlined,
@@ -19,10 +19,9 @@ import { selectionSort } from '../Algorithms/selectionSort';
 
 export let counter = 0
 
-let addCounter = 25
-
 const { Title } = Typography
 const {useBreakpoint} = Grid
+let addCounter = 25
 
 export function appendCounter() {counter += addCounter}
 
@@ -49,6 +48,11 @@ const NavBar = (props) => {
     const [visible, setVisible] = useState(false)
     const [algorithm, setAlgorithm] = useState('Bubble Sort')
     const [disableButtons, setDisabled] = useState(false)
+    const [tempAddCounter, setAddCounter] = useState(25)
+
+    useEffect(() => {
+        addCounter = tempAddCounter
+    }, [tempAddCounter]);
 
     const showDrawer = () => {
         setVisible(true)
@@ -66,44 +70,38 @@ const NavBar = (props) => {
     const runAlgorithms = () => {
         setDisabled(true)
         if (algorithm === 'Bubble Sort') {
-            const result = bblSort(props.array, props.swap, props.color)
+            bblSort(props.array, props.swap, props.color, props.comparison)
             setTimeout(() => {
-                props.setArray(result)
                 setDisabled(false)
             }, counter)
             counter = 0
         } else if (algorithm === 'Quick Sort') {
-            const result = quicksort(props.array, 0, props.array.length - 1, props.swap, props.color)
+            quicksort(props.array, 0, props.array.length - 1, props.swap, props.color)
             setTimeout(() => {
-                props.setArray(result)
                 setDisabled(false)
             }, counter)
             counter = 0
         } else if (algorithm === 'Heap Sort') {
-            const result = heapsort(props.array, props.swap, props.color)
+            heapsort(props.array, props.swap, props.color)
             setTimeout(() => {
-                props.setArray(result)
                 setDisabled(false)
             }, counter)
             counter = 0
         } else if (algorithm === 'Merge Sort') {
-            const result = mergesort(props.array, 0, props.array.length - 1,props.swap, props.color)
+            mergesort(props.array, 0, props.array.length - 1,props.swap, props.color)
             setTimeout(() => {
-                props.setArray(result)
                 setDisabled(false)
             }, counter)
             counter = 0
         } else if (algorithm === 'Insertion Sort') {
-            const result = insertionSort(props.array, props.swap, props.color)
+            insertionSort(props.array, props.swap, props.color)
             setTimeout(() => {
-                props.setArray(result)
                 setDisabled(false)
             }, counter)
             counter = 0
         } else if (algorithm === 'Selection Sort') {
-            const result = selectionSort(props.array, props.swap, props.color)
+            selectionSort(props.array, props.swap, props.color)
             setTimeout(() => {
-                props.setArray(result)
                 setDisabled(false)
             }, counter)
             counter = 0
@@ -179,7 +177,7 @@ const NavBar = (props) => {
             </Col> : <></> }
 
             <Col span={8}>
-                <Slider defaultValue={25} min={10} max={200} disabled={disableButtons} onChange={(e) => addCounter = e}/>
+                <Slider defaultValue={25} min={10} max={100} disabled={disableButtons} onChange={(e) => setAddCounter(e)}/>
             </Col>
             <Col span={8} align="right">
                 <Title level={4} style={{color: "#E2E2E2", margin: "5px"}}>SORTING VISUALIZER</Title>

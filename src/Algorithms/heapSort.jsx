@@ -2,9 +2,13 @@ import { appendCounter, counter } from "../NavBar/NavBar";
 import { swap } from "./quickSort";
 
 export function heapsort(lst, swapBars, color) {
+    for (let j = 0; j < lst.length; j++) {
+        color(j, "#9a0307", 0)
+    }
+
     let n = lst.length - 1
     buildMaxHeap(lst, n, swapBars, color)
-    for (let i = n; i >= -1; i--) {
+    for (let i = n; i >= 0; i--) {
         color(i, "yellow", counter)
         color(0, "yellow", counter)
         appendCounter()
@@ -20,7 +24,7 @@ export function heapsort(lst, swapBars, color) {
 }
 
 function buildMaxHeap(lst, n, swapBars, color) {
-    for (let i = Math.floor(n / 2); i >= -1; i--) {
+    for (let i = Math.floor(n / 2); i >= 0; i--) {
         heapify(lst, i, n, swapBars, color)
     }
 }
@@ -36,7 +40,6 @@ function heapify(lst, index, n, swapBars, color) {
     else {
         maximum = index
     }
-
     if ((right <= n) && (lst[right] > lst[maximum])) {
         maximum = right
     }

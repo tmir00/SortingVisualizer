@@ -1,6 +1,10 @@
 import { appendCounter, counter } from "../NavBar/NavBar";
 
 export function bblSort(array, swap, color) {
+    for (let j = 0; j < array.length; j++) {
+      color(j, "#9a0307", 0)
+    }
+
     let arr = array
     var i, j;
     var len = arr.length;
@@ -12,7 +16,7 @@ export function bblSort(array, swap, color) {
       isSwapped = false;
        
       for(j = 0; j < len; j++){
-          if(arr[j] > arr[j + 1]){
+          if(arr[j] > arr[j + 1]) {
             color(j, "yellow", counter)
             color(j + 1, "yellow", counter)
             appendCounter()
@@ -20,17 +24,18 @@ export function bblSort(array, swap, color) {
             arr[j] = arr[j+1];
             arr[j+1] = temp;
             isSwapped = true;
-            swap(j, j + 1, counter)
+            swap(j, j + 1, counter, arr)
             color(j, "#9a0307", counter)
             color(j + 1, "#9a0307", counter)
           }
       } 
-      // IF no two elements were swapped by inner loop, then break
+      
       color(len - 1 - i, "green", counter)
 
       if(!isSwapped){
         for(j = 0; j < len; j++){
             color(j, "green", counter)
+            appendCounter()
         }   
         break;
       }
