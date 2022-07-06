@@ -34,7 +34,7 @@ const Visualizer = () => {
 
     const resetArray = () => {
         const list = []
-        let listSize = 10
+        let listSize = 20
 
         if (screen.xxl) {
             listSize = randomIntFromInterval(20, 250)
